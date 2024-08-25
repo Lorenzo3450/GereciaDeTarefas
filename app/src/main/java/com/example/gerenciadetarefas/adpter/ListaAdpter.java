@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gerenciadetarefas.CheckListActivity;
 import com.example.gerenciadetarefas.R;
 import com.example.gerenciadetarefas.model.Tarefa;
 
@@ -37,13 +38,21 @@ public class ListaAdpter extends RecyclerView.Adapter<ListaAdpter.ViewHolder> {
         holder.checkBox.setText(tarefa.getTarefa());
         holder.checkBox.setChecked(tarefa.isConcluida());
 
+        // Configura o listener do botão de exclusão
         holder.imageButton.setOnClickListener(v -> {
-            // Handle the click event for the ImageButton
+            // Remove a tarefa da lista
+            itemList.remove(position);
+            // Notifica o adaptador sobre a mudança
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, itemList.size());
+            // Salva a lista atualizada
+            ((CheckListActivity) context).salvarTarefas();
         });
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Handle the change in the CheckBox state
             tarefa.setConcluida(isChecked);
+            // Salva a tarefa após a mudança
+            ((CheckListActivity) context).salvarTarefas();
         });
     }
 

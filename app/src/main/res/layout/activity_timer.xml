@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/cor_de_fundo">
 
+
+    <View
+        android:id="@+id/touchArea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent" />
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -40,22 +46,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
+
+
+
+    <com.example.gerenciadetarefas.CircularProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
         android:layout_width="273dp"
         android:layout_height="271dp"
         android:layout_marginTop="64dp"
-        android:background="@drawable/cicle_2"
-        android:elevation="10dp"
-        android:indeterminate="false"
-        android:indeterminateDrawable="@drawable/cicle_1"
-        android:max="100"
-        android:progress="100"
-        android:rotation="-90"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -109,14 +111,18 @@
         android:id="@+id/editTextNumber"
         android:layout_width="142dp"
         android:layout_height="33dp"
+        android:layout_marginStart="65dp"
         android:background="@drawable/branco_comborda_embaixo"
         android:ems="10"
         android:hint="00:00"
-        android:inputType="number"
+        android:inputType="datetime"
         android:textAlignment="center"
         android:textColor="#004D43"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="246dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/progressBar"
+        app:layout_constraintTop_toTopOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.746" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

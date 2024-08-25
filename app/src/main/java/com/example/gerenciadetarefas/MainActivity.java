@@ -36,6 +36,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnCronometro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SelecionarAtividadeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
 
 

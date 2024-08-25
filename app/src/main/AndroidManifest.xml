@@ -28,6 +28,17 @@
             android:windowSoftInputMode="adjustPan"
             />
 
+        <activity
+            android:name=".SelecionarAtividadeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+        <activity
+            android:name=".CronometroActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            />
 
     </application>
 

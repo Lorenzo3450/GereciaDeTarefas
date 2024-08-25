@@ -1,5 +1,4 @@
 package com.example.gerenciadetarefas;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CheckListActivity extends AppCompatActivity {
@@ -78,6 +79,41 @@ public class CheckListActivity extends AppCompatActivity {
             }
         });
 
+        // Configura o ItemTouchHelper para arrastar e soltar
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+                return makeMovementFlags(dragFlags, 0);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+
+                // Reorganiza os itens na lista
+                Collections.swap(tarefas, fromPosition, toPosition);
+                listaAdpter.notifyItemMoved(fromPosition, toPosition);
+
+                // Salva a lista após a reorganização
+                salvarTarefas();
+
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                // Não precisamos lidar com swipe neste caso
+            }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                return true; // Habilita arrastar com clique longo
+            }
+        });
+
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void configurarRecyclerView() {
@@ -86,7 +122,7 @@ public class CheckListActivity extends AppCompatActivity {
         recyclerView.setAdapter(listaAdpter);
     }
 
-    private void salvarTarefas() {
+    public void salvarTarefas() {
         try {
             FileOutputStream fos = openFileOutput("tarefas.dat", MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
